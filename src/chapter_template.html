@@ -1,0 +1,29 @@
+---
+pagination:
+  data: collections.chapters
+  size: 1
+  alias: chapter
+permalink: "/chapters/{{ chapter.slug }}/"
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ chapter.title }}</title>
+    <link rel="stylesheet" href="/styles/main.css">
+  </head>
+  <body>
+    <header>
+      <h1>{{ chapter.title }}</h1>
+    </header>
+    <main>
+      <article>
+        {{ chapter.html | safe }}
+      </article>
+    </main>
+    <footer>
+      <a href="/">Back to Home</a>
+    </footer>
+  </body>
+</html>
