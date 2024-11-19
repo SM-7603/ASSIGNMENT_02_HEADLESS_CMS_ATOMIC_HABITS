@@ -13,7 +13,7 @@ export default async function () {
     }
 
     return posts.map(post => ({
-      title: post.title | "TO BE NAMED LATER",
+      title: post.title,
       excerpt: post.excerpt,
       tags: post.tags?.map(tag => tag.name) || [],
       slug: post.slug,
