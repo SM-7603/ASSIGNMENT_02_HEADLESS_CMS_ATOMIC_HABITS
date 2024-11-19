@@ -25,19 +25,51 @@ permalink: "/chapters/{{ chapter.slug }}/"
     {% if "chapter" in page.fileSlug %}
     <!-- Sidebar for chapters -->
     {# <aside style="flex-basis: 250px; margin-left: 20px;"> #}
-        <aside class="sidebar"> 
-            <h3>All Chapters</h3>
-        <ul>
-            {% for chapter in collections.chapters %}
-                <li>
-                    <a href="{{ chapter.localUrl }}">{{ chapter.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </aside>
+      <aside class="sidebar">
+          <h3>All Chapters</h3>
+          <input type="text" id="search-bar" placeholder="Search chapters..." oninput="performSearch(event)">
+          <ul id="chapter-list"> {% for chapter in collections.chapters %}
+              <li>
+                  <a href="{{ chapter.localUrl }}">{{ chapter.title }}</a>
+              </li>
+              {% endfor %}
+          </ul>
+      </aside>
     {% endif %}
     <footer>
       <a href="/">Back to Home</a>
     </footer>
+
+    <script>
+      const searchBar = document.getElementById("search-bar");
+      const chapterList = document.getElementById("chapter-list");
+  
+      async function performSearch(event) {
+          const query = event.target.value.toLowerCase();
+  
+          // Call Ghost API
+          const apiKey = "6fd4ffe7ac031243b7e98714b6";
+          const apiUrl = `https://simplicity.ghost.io/ghost/api/content/posts/?key=${apiKey}&filter=title:~'${query}'`;
+  
+          try {
+              const response = await fetch(apiUrl);
+              const { posts } = await response.json();
+  
+              // Update chapter list
+              chapterList.innerHTML = posts
+                  .map(
+                      post =>
+                          `<li><a href="/chapters/${post.slug}/">${post.title}</a></li>`
+                  )
+                  .join("");
+          } catch (error) {
+              console.error("Error fetching data from Ghost API:", error);
+          }
+      }
+  
+      searchBar.addEventListener("input", performSearch);
+  </script>
+
+
   </body>
 </html>
