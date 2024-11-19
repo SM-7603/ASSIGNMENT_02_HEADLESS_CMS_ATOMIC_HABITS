@@ -1,6 +1,7 @@
 {
   "name": "atomic-habits-summary",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,5 +14,8 @@
   "description": "",
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
   }
 }
