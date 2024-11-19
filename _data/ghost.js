@@ -13,12 +13,13 @@ export default async function () {
     }
 
     return posts.map(post => ({
-      title: post.title,
+      title: post.title | "TO BE NAMED LATER",
       excerpt: post.excerpt,
       tags: post.tags?.map(tag => tag.name) || [],
       slug: post.slug,
       html: post.html, // Full HTML content
       url: post.url,
+      localUrl: `/chapters/${post.slug}/`, // Local URL for your site
     }));
   } catch (error) {
     console.error(error.message);
