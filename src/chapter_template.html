@@ -22,6 +22,20 @@ permalink: "/chapters/{{ chapter.slug }}/"
         {{ chapter.html | safe }}
       </article>
     </main>
+    {% if "chapter" in page.fileSlug %}
+    <!-- Sidebar for chapters -->
+    {# <aside style="flex-basis: 250px; margin-left: 20px;"> #}
+        <aside class="sidebar"> 
+            <h3>All Chapters</h3>
+        <ul>
+            {% for chapter in collections.chapters %}
+                <li>
+                    <a href="{{ chapter.localUrl }}">{{ chapter.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </aside>
+    {% endif %}
     <footer>
       <a href="/">Back to Home</a>
     </footer>
