@@ -18,7 +18,7 @@
 
 > http://localhost:8080/
 
-## file strucuture
+## file structure
 
 - src/chapters: has all the base markdown files
 - _includes: has base.html for layout
