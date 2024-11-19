@@ -82,9 +82,18 @@
     <script>
         const searchBar = document.getElementById("search-bar");
         const chapterList = document.getElementById("chapter-list");
+
+        // Save the default list to restore it later
+        const defaultChaptersHTML = chapterList.innerHTML;
     
         async function performSearch(event) {
-            const query = event.target.value.toLowerCase();
+            const query = event.target.value.toLowerCase().trim();
+
+            // If the search bar is empty, restore the default list
+            if (!query) {
+                chapterList.innerHTML = defaultChaptersHTML;
+                return;
+            }
     
             // Call Ghost API
             const apiKey = "6fd4ffe7ac031243b7e98714b6";
