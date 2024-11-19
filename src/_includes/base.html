@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="/styles/main.css">
+    </head>
+    <body>
+        <header>
+            <h1>Atomic Habits: Chapter Summaries</h1>
+        </header>
+        <nav aria-label="breadcrumb">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    {{ title }}</li>
+            </ul>
+        </nav>
+        <div
+            class="container">
+            {# <main style="display: flex"> #}
+            <main class="content">
+                {# <div style="flex: 1">{{ content | safe }}</div> #}
+                <article>{{ content | safe }}</article>
+            </main>
+            {% if "chapter" in page.fileSlug %}
+                <!-- Sidebar for chapters -->
+                {# <aside style="flex-basis: 250px; margin-left: 20px;"> #}
+                    <aside class="sidebar"> 
+                        <h3>All Chapters</h3>
+                    <ul>
+                        {% for chapter in collections.chapters %}
+                            <li>
+                                <a href="{{ chapter.url }}">{{ chapter.data.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </aside>
+            {% endif %}
+        </div>
+        <footer>
+            <nav class="chapter-navigation">
+                {% if "chapter" in page.fileSlug %}
+                    <h3>Chapter Navigation</h3>
+                    {# so yeah, this kind of seemed like a good idea, but I kind guess if we've like an article section, this would be cool to have, as in a complete list of all chapters... - maybe on the rightside of the screen#}
+                    {# TODO - put all this stuff in like an article / other semantic tag, and nest it within main, make sure this thing isn't listed for the homepage, since the homepage already contains all the links! #}
+                    {# TODO - Actually, maybe the homepage could be a little different, and I can just make the aside something that shows up for every single page #}
+                    {# Chapter List
+                                                                                                                                                            <ul>
+                                                                                                                                                                {% for chapter in collections.chapters %}
+                                                                                                                                                                    <li>
+                                                                                                                                                                        <a href="{{ chapter.url }}">{{ chapter.data.title }}</a>
+                                                                                                                                                                    </li>
+                                                                                                                                                                {% endfor %}
+                                                                                                                                                            </ul> #}
+                    <!-- Previous and Next Links -->
+                    {% set previousChapter = collections.chapters | getPreviousCollectionItem(page) %}
+                    {% set nextChapter = collections.chapters | getNextCollectionItem(page) %}
+                        <p>
+                            {% if previousChapter %}<a href="{{ previousChapter.url }}">Previous: {{ previousChapter.data.title }}</a>
+                        {% endif %}
+                        {% if nextChapter %}
+                            <a href="{{ nextChapter.url }}">Next: {{ nextChapter.data.title }}</a>
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <p>Hello, Reader! Thanks for visiting the Atomic Habits summary page. Navigate through the chapters to explore key ideas
+                        from the book!</p>
+                {% endif %}
+            </nav>
+        </footer>
+    </body>
+</html>
