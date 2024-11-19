@@ -1,0 +1,4 @@
+# simple .gitignore file
+
+# ignore installed npm modules
+node_modules/
