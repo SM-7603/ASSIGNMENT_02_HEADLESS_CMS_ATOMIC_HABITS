@@ -8,7 +8,7 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy("src/images");
 
     return {
-        // explicity static that everything should be processed using nunjucks
+        // explicity state that everything should be processed using nunjucks
         markdownTemplateEngine: 'njk',
         dataTemplateEngine: 'njk',
         htmlTemplateEngine: 'njk',
