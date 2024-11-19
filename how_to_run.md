@@ -1,26 +1,73 @@
-# about / how to?
+# User Guide: Atomic Habits Chapter Summaries
 
-## how to run the application
+## About
+
+This project is a static site generator-based implementation of **Atomic Habits Chapter Summaries**, where content is fetched dynamically from **Ghost CMS**. The content is displayed with a **searchable sidebar** and clean, responsive design.
+
+---
+
+## How to Run the Application
 
 ### Dependencies
 
-> npm install
+Install all necessary dependencies using:
 
-### create the static web pages
+```bash
+npm install
+```
 
-> npm run build
+### Create the Static Web Pages
 
-### start the server ("serve")
+Generate the static files for the website:
 
-> npm start
+```bash
+npm run build
+```
 
-### where to access the website:
+### Start the Server ("Serve")
 
-> http://localhost:8080/
+Run the development server to preview your website:
 
-## file structure
+```bash
+npm start
+```
 
-- src/chapters: has all the base markdown files
-- _includes: has base.html for layout
-- styles: main.css for styling
-- public: this has all the output html files
+### Where to Access the Website
+
+Once the server is running, access the website in your browser at:
+
+> **http://localhost:8080/**
+
+---
+
+## File Structure
+
+### Key Folders and Files
+
+- **`src/chapters/`**
+  - Contains all the **base Markdown files** for the chapters.
+  - These files act as the initial content for Eleventy.
+
+- **`src/_includes/`**
+  - Includes **`base.html`** for the layout.
+
+- **`src`**
+  - Contains the source code including - **`chapter_template.html`** for individual chapter pages.
+
+- **`src/styles/`**
+  - Contains **`main.css`** for styling the website.
+
+- **`public/`**
+  - The output folder that contains all the generated **HTML files** and assets.
+  - This folder is used to serve the website.
+
+---
+
+## Features
+
+- **Dynamic Content Loading**: Content is fetched from **Ghost CMS**.
+- **Search Functionality**: Sidebar includes a live search bar to quickly find chapters.
+- **Clean Design**: Simple and responsive layout.
+- **Pagination (In Development)**: Can be added to manage longer chapter lists.
+
+---
