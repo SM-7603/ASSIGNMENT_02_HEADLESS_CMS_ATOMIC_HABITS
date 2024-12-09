@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 
 export default async function () {
-  const url = "https://simplicity.ghost.io/ghost/api/content/posts/?key=6fd4ffe7ac031243b7e98714b6";
+  const url = "http://localhost:2368/ghost/api/content/posts/?key=5a247d2cb1191353977b949c16";
   try {
     const response = await fetch(url);
     if (!response.ok) {
