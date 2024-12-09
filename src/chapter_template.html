@@ -54,8 +54,8 @@ permalink: "/chapters/{{ chapter.slug }}/"
           }
 
           // Call Ghost API
-          const apiKey = "6fd4ffe7ac031243b7e98714b6";
-          const apiUrl = `https://simplicity.ghost.io/ghost/api/content/posts/?key=${apiKey}&filter=title:~'${query}'`;
+          const apiKey = "5a247d2cb1191353977b949c16";
+          const apiUrl = `http://localhost:2368/ghost/api/content/posts/?key=${apiKey}&filter=title:~'${query}'`;
   
           try {
               const response = await fetch(apiUrl);
