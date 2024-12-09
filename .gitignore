@@ -2,3 +2,12 @@
 
 # ignore installed npm modules
 node_modules/
+
+# Local Netlify folder
+.netlify
+
+# local ghost setup
+/ghost-local
+
+# API keys creds
+.env
