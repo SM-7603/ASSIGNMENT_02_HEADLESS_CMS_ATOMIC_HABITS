@@ -82,42 +82,49 @@
     <script>
         const searchBar = document.getElementById("search-bar");
         const chapterList = document.getElementById("chapter-list");
-
+    
         // Save the default list to restore it later
         const defaultChaptersHTML = chapterList.innerHTML;
     
         async function performSearch(event) {
             const query = event.target.value.toLowerCase().trim();
-
+    
             // If the search bar is empty, restore the default list
             if (!query) {
                 chapterList.innerHTML = defaultChaptersHTML;
                 return;
             }
     
-            // Call Ghost API
-            const apiKey = "5a247d2cb1191353977b949c16";
-            const apiUrl = `http://localhost:2368/ghost/api/content/posts/?key=${apiKey}&filter=title:~'${query}'`;
+            // Call the serverless function instead of the Ghost API directly
+            const apiUrl = `/.netlify/functions/searchPosts?query=${encodeURIComponent(query)}`;
     
             try {
                 const response = await fetch(apiUrl);
-                const { posts } = await response.json();
+                if (!response.ok) {
+                    throw new Error("Failed to fetch search results.");
+                }
+    
+                const posts = await response.json();
     
                 // Update chapter list
-                chapterList.innerHTML = posts
-                    .map(
-                        post =>
-                            `<li><a href="/chapters/${post.slug}/">${post.title}</a></li>`
-                    )
-                    .join("");
+                if (posts.length > 0) {
+                    chapterList.innerHTML = posts
+                        .map(
+                            post =>
+                                `<li><a href="${post.localUrl}">${post.title}</a></li>`
+                        )
+                        .join("");
+                } else {
+                    chapterList.innerHTML = "<li>No results found</li>";
+                }
             } catch (error) {
-                console.error("Error fetching data from Ghost API:", error);
+                console.error("Error fetching data from serverless function:", error);
             }
         }
     
         searchBar.addEventListener("input", performSearch);
     </script>
-                    
+                        
 
 </body>
 
