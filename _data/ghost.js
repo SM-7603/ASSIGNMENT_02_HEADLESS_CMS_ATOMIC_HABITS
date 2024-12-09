@@ -1,7 +1,11 @@
 import fetch from "node-fetch";
 
 export default async function () {
-  const url = "http://localhost:2368/ghost/api/content/posts/?key=5a247d2cb1191353977b949c16";
+
+  const ghostUrl = process.env.GHOST_API_URL;
+  const apiKey = process.env.GHOST_API_KEY;
+
+  const url = `${ghostUrl}/posts/?key=${apiKey}`;
   try {
     const response = await fetch(url);
     if (!response.ok) {
