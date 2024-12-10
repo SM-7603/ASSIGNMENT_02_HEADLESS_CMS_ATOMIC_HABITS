@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: The Surprising Power of Atomic Habits</title>
+    <link rel="stylesheet" href="/styles/main.css">
+  </head>
+  <body>
+    <header>
+      <h1>Chapter 1: The Surprising Power of Atomic Habits</h1>
+    </header>
+    <main>
+      <article>
+        <h2 id="the-fundamentals-why-tiny-changes-make-a-big-difference">The Fundamentals: Why Tiny Changes Make a Big Difference</h2>
+<p><img src="https://jamesclear.com/wp-content/uploads/2015/08/tiny-gains-graph-960x960.jpg" alt="power of marginal gains" loading="lazy"></p>
+<h3 id="chapter-1-the-surprising-power-of-atomic-habits">Chapter 1: The Surprising Power of Atomic Habits</h3>
+<p>A habit is a behavior performed regularly and, in many cases, automatically.</p>
+<p><strong>Habits are the compound interest of self-improvement.</strong></p>
+<p>Success is the product of <a href="https://dansilvestre.com/good-daily-habits/?ref=localhost">daily habits</a>. Getting <strong>1% better every day</strong> counts for a lot in the long-run.</p>
+<p>The important thing is whether your habits are putting you on the right path. <strong>Be concerned with your current trajectory and not with your current results.</strong></p>
+<blockquote>
+<p><em>“Your outcomes are a lagging measure of your habits. Your net worth is a lagging measure of your financial habits. Your weight is a lagging measure of your eating habits. Your knowledge is a lagging measure of your learning habits. Your clutter is a lagging measure of your cleaning habits.</em> <strong><em>You get what you repeat.”</em></strong></p>
+</blockquote>
+<p>If you want better results, forget about setting goals. <strong>Focus on your system instead.</strong></p>
+<p><strong>Goals vs Systems</strong></p>
+<ul>
+<li>Goals are the results you want to achieve. Systems are the processes that lead to those results</li>
+<li>Goals are good for setting a direction, but systems are best for making progress</li>
+<li>Achieving a goal is a momentary change. Systems solve a problem for good</li>
+<li>Goals restrict happiness, e.g. <em>“Once I reach my goal, then I’ll be happy.”</em> Systems make you fall in love with the process rather than the product so you don’t have to wait to permit yourself to be happy</li>
+<li>Goals are at odds with long-term progress. Goals are about winning the game. Systems are about continuing to play the game</li>
+</ul>
+<p>You do not rise to the level of your goals. <strong>You fall to the level of your systems.</strong></p>
+
+      </article>
+    </main>
+    
+    <!-- Sidebar for chapters -->
+    
+      <aside class="sidebar">
+        <section id="all-chapter-navigation-section">
+          <h3>All Chapters</h3>
+          <input type="text" id="search-bar" placeholder="Search chapters..." oninput="performSearch(event)">
+          <ul id="chapter-list">
+              
+              <li>
+                  <a href="/chapters/executive-summary/">Executive Summary</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/chapter-8-how-to-make-a-habit-irresistible/">Chapter 8: How to Make a Habit Irresistible</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/chapter-7-the-secret-to-self-control/">Chapter 7: The Secret to Self-Control</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/chapter-6-motivation-is-overrated-environment-often-matters-more/">Chapter 6: Motivation Is Overrated; Environment Often Matters More</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/chapter-5-the-best-way-to-start-a-new-habit/">Chapter 5: The Best Way to Start a New Habit</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/chapter-4-the-man-who-didnt-look-right/">Chapter 4: The Man Who Didn’t Look Right</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/chapter-3-how-to-build-better-habits-in-4-simple-steps/">Chapter 3: How to Build Better Habits in 4 Simple Steps</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/chapter-2-identity-based-habits/">Chapter 2: Identity-Based Habits</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/chapter-1-the-surprising-power-of-atomic-habits/">Chapter 1: The Surprising Power of Atomic Habits</a>
+              </li>
+              
+              <li>
+                  <a href="/chapters/coming-soon/">Coming soon</a>
+              </li>
+              
+          </ul>
+        </section>
+  
+        <!-- Recent Chapters Section -->
+        <section id="recent-chapter-section">
+          <h3>Recent Chapters</h3>
+          <ul id="recent-chapters"></ul>
+        </section>
+
+        <!-- Popular Tags Section -->
+        <section id="popular-tag-section">
+          <h3>Popular Tags</h3>
+          <ul id="popular-tags-list"></ul>
+        </section>
+  
+          <!-- Random Chapter Button -->
+        <button id="random-chapter">Surprise Me!</button>
+    </aside>
+    
+
+    <footer>
+      <nav class="chapter-navigation">
+          <h3>Chapter Navigation</h3>
+          <p id="navigation-links">
+              <!-- Links will be dynamically populated -->
+          </p>
+      </nav>
+      <a href="/">Back to Home</a>
+    </footer>
+    
+    <script>
+      const searchBar = document.getElementById("search-bar");
+      const chapterList = document.getElementById("chapter-list");
+  
+      // Save the default list to restore it later
+      const defaultChaptersHTML = chapterList.innerHTML;
+  
+      async function performSearch(event) {
+          const query = event.target.value.toLowerCase().trim();
+  
+          // If the search bar is empty, restore the default list
+          if (!query) {
+              chapterList.innerHTML = defaultChaptersHTML;
+              return;
+          }
+  
+          // Call the serverless function instead of the Ghost API directly
+          const apiUrl = `/.netlify/functions/searchPosts?query=${encodeURIComponent(query)}`;
+  
+          try {
+              const response = await fetch(apiUrl);
+              if (!response.ok) {
+                  throw new Error("Failed to fetch search results.");
+              }
+  
+              const posts = await response.json();
+  
+              // Update chapter list
+              if (posts.length > 0) {
+                  chapterList.innerHTML = posts
+                      .map(
+                          post =>
+                              `<li><a href="${post.localUrl}">${post.title}</a></li>`
+                      )
+                      .join("");
+              } else {
+                  chapterList.innerHTML = "<li>No results found</li>";
+              }
+          } catch (error) {
+              console.error("Error fetching data from serverless function:", error);
+          }
+      }
+  
+      searchBar.addEventListener("input", performSearch);
+
+        // Additional functions for recent chapters, popular tags, and random chapter
+        async function loadRecentChapters() {
+            const response = await fetch('/.netlify/functions/recentChapters');
+            if (response.ok) {
+                const chapters = await response.json();
+                const list = document.getElementById('recent-chapters');
+                list.innerHTML = chapters
+                    .map(
+                        chapter => `<li><a href="${chapter.localUrl}">${chapter.title}</a></li>`
+                    )
+                    .join('');
+            } else {
+                console.error("Failed to load recent chapters.");
+            }
+        }
+
+        async function displayPopularTags() {
+          const tagsApiUrl = '/.netlify/functions/getPopularTags';
+
+          try {
+              const response = await fetch(tagsApiUrl);
+              if (!response.ok) {
+                  throw new Error('Failed to fetch popular tags.');
+              }
+
+              const tags = await response.json();
+
+              // Populate tags in the DOM with a data-tag attribute
+              const popularTagsList = document.getElementById('popular-tags-list');
+              popularTagsList.innerHTML = tags
+                  .map(
+                      tag =>
+                          `<li><a href="#" class="tag-link" data-tag="${tag.slug}">${tag.name} (${tag.postCount})</a></li>`
+                  )
+                  .join('');
+          } catch (error) {
+              console.error('Error fetching popular tags:', error);
+          }
+        }
+
+
+        async function randomChapter() {
+            const response = await fetch('/.netlify/functions/getRandomPost');
+            if (response.ok) {
+                const post = await response.json();
+                window.location.href = post.localUrl;
+            } else {
+                console.error("Failed to fetch random chapter.");
+            }
+        }
+
+        document.getElementById('random-chapter').addEventListener('click', randomChapter);
+
+        // Load dynamic sidebar content
+        loadRecentChapters();
+        // Call the function to populate popular tags
+        displayPopularTags();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+          const popularTagsList = document.getElementById('popular-tags-list');
+
+          popularTagsList.addEventListener('click', async (event) => {
+              if (event.target && event.target.classList.contains('tag-link')) {
+                  event.preventDefault();
+
+                  const tag = event.target.getAttribute('data-tag');
+                  const postsApiUrl = `/.netlify/functions/getPostsByTag?tag=${encodeURIComponent(tag)}`;
+
+                  try {
+                      const response = await fetch(postsApiUrl);
+                      if (!response.ok) {
+                          throw new Error('Failed to fetch posts for the selected tag.');
+                      }
+
+                      const posts = await response.json();
+
+                      // Replace main content with posts for the selected tag
+                      const mainContent = document.querySelector('main');
+                      mainContent.innerHTML = `
+                          <h2>Posts tagged with "${tag}"</h2>
+                          <ul>
+                              ${posts
+                                  .map(
+                                      post => `<li><a href="${post.localUrl}">${post.title}</a></li>`
+                                  )
+                                  .join('')}
+                          </ul>
+                          <a href="/" class="back-to-home">Back to Home</a>
+                      `;
+                  } catch (error) {
+                      console.error('Error fetching posts by tag:', error);
+                  }
+              }
+          });
+      });
+
+      // Fetch chapter navigation dynamically
+      async function loadNavigation(currentSlug) {
+        const apiUrl = `/.netlify/functions/navigation?currentSlug=${encodeURIComponent(currentSlug)}`;
+        
+          try {
+              const response = await fetch(apiUrl);
+              if (!response.ok) {
+                  throw new Error("Failed to fetch chapters for navigation.");
+              }
+
+              const { previous, next } = await response.json();
+        const navigationLinks = document.getElementById("navigation-links");
+        navigationLinks.innerHTML = `
+            ${previous ? `<a href="${previous.localUrl}">Previous: ${previous.title}</a>` : ""}
+            ${next ? `<a href="${next.localUrl}">Next: ${next.title}</a>` : ""}
+        `;
+        } catch (error) {
+            console.error("Error loading chapter navigation:", error);
+        }
+      }
+
+      // Call the function with the current slug
+      const currentSlug = "chapter-1-the-surprising-power-of-atomic-habits"; // get's the current chapter slug
+      loadNavigation(currentSlug);
+
+  </script>
+  
+
+  </body>
+</html>
