@@ -208,28 +208,23 @@ permalink: "/chapters/{{ chapter.slug }}/"
 
       // Fetch chapter navigation dynamically
       async function loadNavigation(currentSlug) {
-          const apiUrl = `/.netlify/functions/recentChapters`;
-
+        const apiUrl = `/.netlify/functions/navigation?currentSlug=${encodeURIComponent(currentSlug)}`;
+        
           try {
               const response = await fetch(apiUrl);
               if (!response.ok) {
                   throw new Error("Failed to fetch chapters for navigation.");
               }
 
-              const chapters = await response.json();
-              const currentIndex = chapters.findIndex(ch => ch.slug === currentSlug);
-
-              const next = currentIndex > 0 ? chapters[currentIndex - 1] : null;
-              const previous = currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null;
-
-              const navigationLinks = document.getElementById("navigation-links");
-              navigationLinks.innerHTML = `
-                  ${previous ? `<a href="${previous.localUrl}">Previous: ${previous.title}</a>` : ""}
-                  ${next ? `<a href="${next.localUrl}">Next: ${next.title}</a>` : ""}
-              `;
-          } catch (error) {
-              console.error("Error loading chapter navigation:", error);
-          }
+              const { previous, next } = await response.json();
+        const navigationLinks = document.getElementById("navigation-links");
+        navigationLinks.innerHTML = `
+            ${previous ? `<a href="${previous.localUrl}">Previous: ${previous.title}</a>` : ""}
+            ${next ? `<a href="${next.localUrl}">Next: ${next.title}</a>` : ""}
+        `;
+        } catch (error) {
+            console.error("Error loading chapter navigation:", error);
+        }
       }
 
       // Call the function with the current slug
