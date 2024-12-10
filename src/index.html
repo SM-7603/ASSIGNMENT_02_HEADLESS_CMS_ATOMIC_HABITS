@@ -1,0 +1,109 @@
+---
+title: "Atomic Habits: Summary Overview"
+layout: "base.html"
+---
+
+<header>
+  <h1>Welcome to Atomic Habits Summary</h1>
+</header>
+
+<main class="container">
+  <section class="content">
+    <p>This site provides a chapter-by-chapter summary of <i>Atomic Habits</i> by James Clear. Navigate through the chapters to explore the key concepts, ideas, and actionable advice from the book.</p>
+    
+    <p>Use the link below to start reading:</p>
+    
+    <a href="./chapters/executive-summary" class="btn">Quick summary + list of all chapters!</a>
+    
+    <img src="./images/power_of_marginal_gains.jpg" alt="Atomic Habits Flowchart">
+  </section>
+  
+  <aside class="sidebar">
+    <section id="all-chapter-navigation-section">
+      <h3>All Chapters</h3>
+      <input type="text" id="search-bar" placeholder="Search chapters..." oninput="performSearch(event)">
+      <ul id="chapter-list">
+        {% for chapter in collections.chapters %}
+        <li>
+          <a href="{{ chapter.localUrl }}">{{ chapter.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section id="recent-chapter-section">
+      <h3>Recent Chapters</h3>
+      <ul id="recent-chapters"></ul>
+    </section>
+
+    <button id="random-chapter">Surprise Me!</button>
+  </aside>
+</main>
+
+<footer>
+  <nav class="chapter-navigation">
+    <p id="navigation-links"></p>
+  </nav>
+  <a href="/">Back to Home</a>
+</footer>
+
+<script>
+  const searchBar = document.getElementById("search-bar");
+  const chapterList = document.getElementById("chapter-list");
+
+  // Save the default list to restore it later
+  const defaultChaptersHTML = chapterList.innerHTML;
+
+  async function performSearch(event) {
+    const query = event.target.value.toLowerCase().trim();
+
+    if (!query) {
+      chapterList.innerHTML = defaultChaptersHTML;
+      return;
+    }
+
+    const apiUrl = `/.netlify/functions/searchPosts?query=${encodeURIComponent(query)}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error("Failed to fetch search results.");
+      
+      const posts = await response.json();
+      chapterList.innerHTML = posts.length > 0
+        ? posts.map(post => `<li><a href="${post.localUrl}">${post.title}</a></li>`).join("")
+        : "<li>No results found</li>";
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  async function loadRecentChapters() {
+    try {
+      const response = await fetch('/.netlify/functions/recentChapters');
+      if (!response.ok) throw new Error("Failed to load recent chapters.");
+      
+      const chapters = await response.json();
+      document.getElementById('recent-chapters').innerHTML = chapters
+        .map(chapter => `<li><a href="${chapter.localUrl}">${chapter.title}</a></li>`)
+        .join('');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function randomChapter() {
+    try {
+      const response = await fetch('/.netlify/functions/getRandomPost');
+      if (!response.ok) throw new Error("Failed to fetch random chapter.");
+      
+      const post = await response.json();
+      window.location.href = post.localUrl;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  document.getElementById('random-chapter').addEventListener('click', randomChapter);
+
+  loadRecentChapters();
+</script>
