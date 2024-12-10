@@ -23,12 +23,18 @@ Before proceeding, ensure the following dependencies are installed:
 
 ### **Steps**
 
-1. **Install Dependencies**:  
+1. **Clone or Download the Repository**:
+   ```bash
+   git clone https://github.com/SM-7603/ASSIGNMENT_02_HEADLESS_CMS_ATOMIC_HABITS.git
+   cd ASSIGNMENT_02_HEADLESS_CMS_ATOMIC_HABITS
+   ```
+
+2. **Install Dependencies**:  
    ```bash
    npm install
    ```
 
-2. **Run Ghost CMS Locally**:
+3. **Run Ghost CMS Locally**:
    - Ghost requires an empty directory for installation. Follow these steps:
      1. Create a new directory specifically for Ghost:
         ```bash
@@ -52,14 +58,14 @@ Before proceeding, ensure the following dependencies are installed:
         - Navigate to **Settings → Integrations → Add Custom Integration**.
         - Provide a name for your integration and copy the **Content API Key**.
 
-3. **Setup `.env` File**:
+4. **Setup `.env` File**:
    - Create a `.env` file in the root directory with the following content:
      ```env
      GHOST_API_URL=http://localhost:2368
      GHOST_API_KEY=<Your Ghost API Key>
      ```
 
-4. **Run the Site Locally**:  
+5. **Run the Site Locally**:  
    Start the Netlify Dev server:
    ```bash
    npx netlify dev
